@@ -19,12 +19,14 @@ export function AuthProvider({ children }) {
         setLoading(false);
       });
   }, []);
-
+ 
   const login = async (payload) => {
-    const response = await api.login(payload);
-    setUser(response.data.data.user);
-    return response.data;
-  };
+  const response = await api.login(payload);
+  const token = response.data.data.accessToken;
+  localStorage.setItem("accessToken", token);
+  setUser(response.data.data.user);
+  return response.data;
+};
 
   const register = async (formData) => {
     const response = await api.register(formData);
